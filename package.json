@@ -15,11 +15,11 @@
     "build-dist-prod": "NODE_ENV=production webpack --config webpack.config --progress --colors -p",
     "build-js": "rm -rf ./lib && babel src -d lib",
     "build-css": "rm -rf ./styles && mkdir styles && node .cssnext",
-    "build": "npm run build-js && npm run build-css && npm run build-dist-dev && npm run build-dist-prod",
+    "build:old-build": "npm run build-js && npm run build-css && npm run build-dist-dev && npm run build-dist-prod",
     "lint": "eslint ./src --fix",
     "prepublish": "npm run build",
     "prepush": "npm run lint",
-    "build:wave-motion": "rm -rf build && mkdir build && cd test && npm run build && cp -r build/ ../build"
+    "build": "rm -rf build && mkdir build && cd test && npm run build && cp -r build/ ../build"
   },
   "keywords": [
     "react",
