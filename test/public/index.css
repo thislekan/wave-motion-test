@@ -395,15 +395,9 @@ button:before {
 }
 
 .highlited-wave {
-  /* background-color: red; */
-  /* height: 5px; */
   position: absolute;
   height: 100%;
   top: 0;
-  /* mask-image: url("#waveform-mask"); */
-  /* left: 0; */
-  /* width: 100%; */
-  /* fill: transparent; */
   clip-path: url("#waveform-mask");
   z-index: -1;
 }

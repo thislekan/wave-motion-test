@@ -19,9 +19,12 @@ class AudioPlayer extends Component {
       currentTime: 0,
       speedup: false,
       loadErr: false,
-      buckets: [] // will contain audio file converted into Float32Array of the loudest volume at a point in time
+      buckets: [], // will contain audio file converted into Float32Array of the loudest volume at a point in time,
+      dragStart: 0,
+      dragEnd: 0
     };
     this.selectProgressDiv = React.createRef(); // reference to the progress parent div
+    this.svgWaveBground = React.createRef();
   }
 
   seek(secs, play) {
@@ -95,6 +98,21 @@ class AudioPlayer extends Component {
     return obj instanceof Object || (typeof obj === "object" && obj !== null);
   }
 
+  whenDragStart(e, ref) {
+    e.persist();
+    const secs =
+      (e.clientX - ref.getBoundingClientRect().left) / ref.offsetWidth;
+    this.setState({ dragStart: Math.floor(secs * 100) });
+  }
+
+  whenDragEnds(e, ref) {
+    e.persist();
+
+    const secs =
+      (e.clientX - ref.getBoundingClientRect().left) / ref.offsetWidth;
+    this.setState({ dragEnd: Math.floor(secs * 100) });
+  }
+
   render() {
     const { mp3url } = this.props;
     let { playing, currentTime, duration, speedup, loadErr } = this.state;
@@ -148,6 +166,12 @@ class AudioPlayer extends Component {
                         : "-15px"
                     }`
                   }}
+                  onDragStart={e =>
+                    this.whenDragStart(e, this.selectProgressDiv.current)
+                  }
+                  onDragEnd={e =>
+                    this.whenDragEnds(e, this.selectProgressDiv.current)
+                  }
                 >
                   <div className="progress-ball-div-inner-ball" />
                 </div>
@@ -170,6 +194,7 @@ class AudioPlayer extends Component {
                     viewBox="0 0 100 100"
                     className="waveform-container"
                     preserveAspectRatio="none"
+                    ref={this.svgWaveBground}
                   >
                     <rect
                       className="waveform-bg"
@@ -187,6 +212,15 @@ class AudioPlayer extends Component {
                       width={`${(this.state.currentTime / this.state.duration) *
                         100}`}
                       style={{ transition: "width 0.2s ease-in" }}
+                    />
+                    {/* the svg for showing highlites */}
+                    <rect
+                      className="highlited-wave"
+                      x={`${this.state.dragStart}`}
+                      y="0"
+                      height="0"
+                      width={`${this.state.dragEnd - this.state.dragStart}`}
+                      fill="#7916D5"
                     />
                   </svg>
 
