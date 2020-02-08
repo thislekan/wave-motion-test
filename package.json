@@ -19,7 +19,7 @@
     "lint": "eslint ./src --fix",
     "prepublish": "npm run build",
     "prepush": "npm run lint",
-    "build": "rm -rf build && mkdir build && cd test && npm run build && cp -r build/ ../build"
+    "build": "rm -rf build && mkdir build && cd test && rm -rf node_modules && npm install && npm run build && cp -r build/ ../build"
   },
   "keywords": [
     "react",
