@@ -188,14 +188,6 @@ class AudioPlayer extends Component {
                         100}`}
                       style={{ transition: "width 0.2s ease-in" }}
                     />
-                    {/* <rect
-                      className="highlited-wave"
-                      x={`${this.state.highliteStart / 100}`}
-                      y="0"
-                      width={`${this.state.width / 100}`}
-                      height="100"
-                      fill={`${this.state.width ? "red" : "transparent"}`}
-                    /> */}
                   </svg>
 
                   {/* <!-- this SVG is the "clipping mask" - the waveform bars --> */}
